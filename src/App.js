@@ -10,20 +10,24 @@ import ShoppingCart from './components/ShoppingCart';
 
 function App() {
   const [products] = useState(data);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem('cart-items')) || [],
+  );
 
   const addItem = item => {
     // add the given item to the cart
     setCart([...cart, item]);
+    localStorage.setItem('cart-items', JSON.stringify(cart));
   };
 
   const removeItem = id => {
     const items = cart.filter(item => item.id !== id);
     setCart(items);
+    localStorage.setItem('cart-items', JSON.stringify(cart));
   };
 
   useEffect(() => {
-    console.log(cart);
+    localStorage.setItem('cart-items', JSON.stringify(cart));
   }, [cart]);
 
   return (
